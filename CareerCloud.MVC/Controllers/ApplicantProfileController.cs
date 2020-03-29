@@ -76,7 +76,7 @@ namespace CareerCloud.MVC.Controllers
 
       public IActionResult ContinueCreatingProfile(Guid loginId)
         {
-            ViewData["LoginId"] = new SelectList(_context.SecurityLogins,  "Login", loginId.ToString());
+            ViewData["LoginId"] = loginId;
             ViewData["Country"] = new SelectList(_context.SystemCountryCodes, "Code", "Code");
             return View();
         }
