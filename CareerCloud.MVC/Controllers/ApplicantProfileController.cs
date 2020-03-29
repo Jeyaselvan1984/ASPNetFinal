@@ -27,6 +27,7 @@ namespace CareerCloud.MVC.Controllers
             return View(await careerCloudContext.ToListAsync());
         }
 
+        
         // GET: ApplicantProfile/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
@@ -52,6 +53,30 @@ namespace CareerCloud.MVC.Controllers
 
             return View(applicantProfilePoco);
         }
+
+        public async Task<IActionResult> ApplyViewForApplicant(Guid? id, String searchString)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var CompanyJobs = _context.CompanyJobDescriptions
+                            .Include(c => c.CompanyJob);
+           
+
+            var careerClouddata = from s in CompanyJobs select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                //careerCloudContext.Include(s => s.JobName.Contains(searchString));
+                careerClouddata = careerClouddata.Where(s => s.JobName.Contains(searchString));
+                //CompanyJobDesciptions = CompanyJobDesciptions.Where(s => s.JobName.Contains(searchString));
+                //var model = careerCloudContext.FirstOrDefault(s => s.JobName.Contains("engin"));
+            }
+            ViewData["ApplicantId"] = id;
+
+            return View(await careerClouddata.AsNoTracking().ToListAsync());
+        }
+        //
 
         //// GET: ApplicantProfile/Details/5
         //public async Task<IActionResult> Details(Guid? id)

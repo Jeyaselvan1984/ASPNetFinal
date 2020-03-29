@@ -1,0 +1,46 @@
+﻿@model IEnumerable<CareerCloud.Pocos.CompanyJobDescriptionPoco>
+
+@{
+    ViewData["Title"] = "_ApplyForJob";
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.JobName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.JobDescriptions)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TimeStamp)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyJob)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JobName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JobDescriptions)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimeStamp)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompanyJob.Id)
+                </td>
+                <td>
+                    <input type="submit" value="Apply" onclick="location.href = '@Url.Action("ApplyForSelectedJob", "ApplicantJobApplication")?JobId=@item.CompanyJob.Id&ApplicantId=@ViewData["ApplicantId"]'" />
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

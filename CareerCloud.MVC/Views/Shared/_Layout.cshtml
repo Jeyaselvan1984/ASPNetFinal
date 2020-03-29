@@ -28,12 +28,13 @@
                      
                             <a class="nav-link text-light" asp-area="" asp-controller="SecurityLoginPocoes" asp-action="Index">Logins</a>
                      
-                    <div class="search">
-                        <form>
-                            <input type="text" placeholder="Search Jobs..." />
-                            <button>search</button>
-                        </form>
-                    </div>
+                            <div class="search">
+
+                                <input id="searchtext" type="text" placeholder="Search Jobs..." />
+                                
+                                    <input type="submit" value="Search" onclick="location.href='@Url.Action("Index", "CompanyJobDescription")?searchString=' + $('#searchtext').val()" />
+                               
+                            </div>
                
       
         </div>

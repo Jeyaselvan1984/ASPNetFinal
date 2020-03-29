@@ -20,13 +20,41 @@ namespace CareerCloud.MVC.Controllers
         }
 
         // GET: CompanyJobDescription
-        public async Task<IActionResult> Index()
-        {
-            var careerCloudContext = _context.CompanyJobDescriptions.Include(c => c.CompanyJob);
-            return View(await careerCloudContext.ToListAsync());
-        }
+        //public async Task<IActionResult> Index()
+        //{
+        //    var careerCloudContext = _context.CompanyJobDescriptions.Include(c => c.CompanyJob);
+        //    return View(await careerCloudContext.ToListAsync());
+        //}
 
-        // GET: CompanyJobDescription/Details/5
+        public async Task<IActionResult> Index(string searchString)
+        {
+             var careerCloudContext = _context.CompanyJobDescriptions.Include(c => c.CompanyJob);
+            //var CompanyJobDesciptions = from s in _context.CompanyJobDescriptions
+            //                            join cj in _context.CompanyJobs on s.CompanyJob equals cj.Id
+            //                            select new { s.JobName, s.JobDescriptions };
+            var careerClouddata = from s  in careerCloudContext select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                //careerCloudContext.Include(s => s.JobName.Contains(searchString));
+                  careerClouddata = careerClouddata.Where(s => s.JobName.Contains(searchString));
+                //CompanyJobDesciptions = CompanyJobDesciptions.Where(s => s.JobName.Contains(searchString));
+                //var model = careerCloudContext.FirstOrDefault(s => s.JobName.Contains("engin"));
+            }
+            return View(await careerClouddata.AsNoTracking().ToListAsync());
+        }
+        //    public async Task<IActionResult> GetAllJobsView(String jobSearchtext)
+        //{
+            
+        //    var careerCloudContext = _context.CompanyJobDescriptions.Include(c => c.CompanyJob);
+        //    careerCloudContext = careerCloudContext.Where(s => s.JobName.Contains(jobSearchtext));
+        //     //var model = careerCloudContext.Where(s => s.JobName.Contains(jobSearchtext));
+      
+
+        //    careerCloudContext = careerCloudContext.FirstOrDefaultAsync(s => s.JobName.Contains("engin"));
+        //    return View(await careerCloudContext.ToListAsync());
+        //}
+
+        //GET: CompanyJobDescription/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
             if (id == null)
