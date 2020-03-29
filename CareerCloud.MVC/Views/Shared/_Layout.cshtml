@@ -10,35 +10,27 @@
 <body>
     <header>
         <div class="nav">
-           
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">IConnect Job Portal</a>
-               
-            
-                
-                    
-                        
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                   
-                   
-                            <a class="nav-link text-light" asp-area="" asp-controller="ApplicantProfile" asp-action="Index">Profiles</a>
-                    
-                      
-                            <a class="nav-link text-light" asp-area="" asp-controller="CompanyProfile" asp-action="Index">Companies</a>
-                    
-                     
-                            <a class="nav-link text-light" asp-area="" asp-controller="SecurityLoginPocoes" asp-action="Index">Logins</a>
-                     
-                            <div class="search">
 
-                                <input id="searchtext" type="text" placeholder="Search Jobs..." />
-                                
-                                    <input type="submit" value="Search" onclick="location.href='@Url.Action("Index", "CompanyJobDescription")?searchString=' + $('#searchtext').val()" />
-                               
-                            </div>
-               
-      
-        </div>
-    </header>
+            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><b>IConnect Home</b></a>
+
+            <a class="nav-link text-light" asp-area="" asp-controller="ApplicantProfile" asp-action="Index">Job Seekers</a>
+
+
+            <a class="nav-link text-light" asp-area="" asp-controller="CompanyProfile" asp-action="Index">Employers</a>
+
+
+
+
+            <div class="search" align="right">
+                <input id="searchtext" type="text" placeholder="Search Jobs..." />
+
+                <input type="submit" value="Search" onclick="location.href='@Url.Action("Index", "CompanyJobDescription")?searchString=' + $('#searchtext').val()" />
+                </div>
+
+
+
+            </div>
+</header>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()

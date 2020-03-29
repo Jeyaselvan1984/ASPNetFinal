@@ -10,12 +10,12 @@
 <h1>Details</h1>
 
 <div>
-    <h4>Applicant Profile for @Model.SecurityLogin.FullName</h4>
+    <h4 style="color:fuchsia" >Applicant Profile for @Model.SecurityLogin.FullName</h4>
 
     <div>
         <p>
             Search Jobs: <input id="searchText" type="text" />
-            <input type="submit" value="Search" onclick="location.href='@Url.Action("ApplyViewForApplicant", "ApplicantProfile")?id=@Model.Id&searchString=' + $('#searchText').val()" /> |
+            <input type="submit" value="Search" onclick="location.href='@Url.Action("ApplyViewForApplicant", "ApplicantProfile")?id=@Model.Id&searchString=' + $('#searchText').val()" /> 
         </p>
     </div>
     <hr />
@@ -50,6 +50,9 @@
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+<div>
+    <partial name="_ApplicantJobApplications" model="@Model.ApplicantJobApplication.ToList()" />
+</div>
 <div>  
     <partial name="_ApplicantResumes" model="@Model.ApplicantResume.ToList()" />   
 </div>
@@ -62,8 +65,6 @@
 <div>
     <partial name="_ApplicantWorkHistory" model="@Model.ApplicantWorkHistory.ToList()" />
 </div>
-<div>
-    <partial name="_ApplicantJobApplications" model="@Model.ApplicantJobApplication.ToList()" />
-</div>
+
 
 

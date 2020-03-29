@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel;
 
 namespace CareerCloud.Pocos
 {
@@ -14,6 +15,7 @@ namespace CareerCloud.Pocos
         public Guid Applicant { get; set; }
         public Guid Job { get; set; }
         [Column("Application_Date")]
+        [DisplayName("Application Date")]
         public DateTime ApplicationDate { get; set; }
         [Column("Time_Stamp")]
         public Byte[] TimeStamp { get; set; }

@@ -4,7 +4,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>List of Job Seekers</h1>
 
 <p>
     <input type="Submit" value="Create New Profile" onclick="location.href = '@Url.Action("CreateNewprofileLogin", "SecurityLoginPocoes")'" />
@@ -12,6 +12,9 @@
 <table class="table">
     <thead>
         <tr>
+            <th>
+                Full Name
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.CurrentSalary)
             </th>
@@ -22,32 +25,19 @@
                 @Html.DisplayNameFor(model => model.Currency)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Province)
+                Current Address
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Street)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.City)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PostalCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TimeStamp)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SystemCountryCode)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.SecurityLogin)
-            </th>
+
+
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SecurityLogin.FullName)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CurrentSalary)
             </td>
@@ -58,26 +48,14 @@
                 @Html.DisplayFor(modelItem => item.Currency)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Province)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.Street)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.City)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PostalCode)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TimeStamp)
-            </td>
-            <td>
+                @Html.DisplayFor(modelItem => item.City) /
+                @Html.DisplayFor(modelItem => item.Province)
+                @Html.DisplayFor(modelItem => item.PostalCode) /
                 @Html.DisplayFor(modelItem => item.SystemCountryCode.Code)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SecurityLogin.Id)
-            </td>
+
+
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |

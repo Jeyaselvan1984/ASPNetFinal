@@ -34,10 +34,16 @@ namespace CareerCloud.MVC.Controllers
                 return NotFound();
             }
 
-            var applicantJobApplicationPoco = await _context.ApplicantJobApplications
-                .Include(a => a.ApplicantProfile)
-                .Include(a => a.CompanyJob)
-                .FirstOrDefaultAsync(m => m.Id == id);
+           
+
+             var applicantJobApplicationPoco = await _context.ApplicantJobApplications
+              .Include(a => a.ApplicantProfile)
+              .Include(a => a.CompanyJob)
+                .ThenInclude(c=>c.CompanyJobDescription)        
+                 .AsNoTracking()
+              .FirstOrDefaultAsync(m => m.Id == id);
+        
+
             if (applicantJobApplicationPoco == null)
             {
                 return NotFound();

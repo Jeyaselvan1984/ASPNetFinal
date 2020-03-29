@@ -3,8 +3,10 @@
 @{
     ViewData["Title"] = "_ApplicantWorkHistory";
 }
+<h2> Experience Details</h2>
+<hr />
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" asp-controller="ApplicantWorkHistory">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -34,59 +36,48 @@
                 @Html.DisplayNameFor(model => model.EndYear)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TimeStamp)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ApplicantProfile)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.SystemCountryCode)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.CompanyName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Location)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.JobTitle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.JobDescription)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartMonth)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartYear)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndMonth)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EndYear)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TimeStamp)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ApplicantProfile.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SystemCountryCode.Code)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompanyName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Location)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JobTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.JobDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartMonth)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartYear)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndMonth)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndYear)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SystemCountryCode.Code)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-controller="ApplicantWorkHistory" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-controller="ApplicantWorkHistory" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-controller="ApplicantWorkHistory" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

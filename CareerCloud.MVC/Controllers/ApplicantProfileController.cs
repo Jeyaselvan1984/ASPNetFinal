@@ -137,7 +137,7 @@ namespace CareerCloud.MVC.Controllers
             {
                 return NotFound();
             }
-            ViewData["Login"] = new SelectList(_context.SecurityLogins, "Id", "Id", applicantProfilePoco.Login);
+            ViewData["LoginId"] = applicantProfilePoco.Login;
             ViewData["Country"] = new SelectList(_context.SystemCountryCodes, "Code", "Code", applicantProfilePoco.Country);
             return View(applicantProfilePoco);
         }

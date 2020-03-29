@@ -3,9 +3,10 @@
 @{
     ViewData["Title"] = "_ApplicantJobApplications";
 }
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
+<h2> Submitted Job Applications</h2>
+<hr />
+<h4> For Applying new jobs, search and Apply</h4>
 <table class="table">
     <thead>
         <tr>
@@ -16,11 +17,10 @@
                 @Html.DisplayNameFor(model => model.TimeStamp)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CompanyJob)
+                Job ID
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ApplicantProfile)
-            </th>
+
+
             <th></th>
         </tr>
     </thead>
@@ -37,13 +37,11 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Job)
                 </td>
+
                 <td>
-                    @Html.DisplayFor(modelItem => item.ApplicantProfile.Id)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Details" asp-controller="ApplicantJobApplication" asp-route-id="@item.Id">More Details</a> |
+                    <a asp-action="Delete" asp-controller="ApplicantJobApplication" asp-route-id="@item.Id">Withdraw Application</a>
+
                 </td>
             </tr>
         }

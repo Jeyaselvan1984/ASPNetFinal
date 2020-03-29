@@ -4,8 +4,10 @@
     ViewData["Title"] = "_ApplicantEducations";
 }
 
+<h2> Educations for Selected Applicant</h2>
+<hr/>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" asp-controller="ApplicantEducations">Add New Education Qualification</a>
 </p>
 <table class="table">
     <thead>
@@ -24,12 +26,6 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.CompletionPercent)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TimeStamp)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ApplicantProfiles)
             </th>
             <th></th>
         </tr>
@@ -54,15 +50,9 @@
                     @Html.DisplayFor(modelItem => item.CompletionPercent)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TimeStamp)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ApplicantProfiles.Id)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="Edit" asp-controller="ApplicantEducations" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-controller="ApplicantEducations" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-controller="ApplicantEducations" asp-route-id="@item.Id">Delete</a>
                 </td>
             </tr>
         }
