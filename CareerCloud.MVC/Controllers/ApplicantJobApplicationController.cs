@@ -60,35 +60,18 @@ namespace CareerCloud.MVC.Controllers
             ViewData["Job"] = JobId;
             ApplicantJobApplicationPoco jobapplication = new ApplicantJobApplicationPoco();
             jobapplication.Job = JobId;
-            //.TimeStamp = .Parse(DateTime.Now);
+            jobapplication.ApplicationDate = DateTime.Now;
             jobapplication.Applicant = ApplicantId;
             if (ModelState.IsValid)
             {
                 jobapplication.Id = Guid.NewGuid();
                 _context.Add(jobapplication);
                 await _context.SaveChangesAsync();
-                //return RedirectToAction(nameof(Index));
             }
-            //await _context.SaveChangesAsync();
             return RedirectToAction("Details", "ApplicantProfile", new { id = ApplicantId });
-
-
-            //return View("ApplyForSelectedJob",jobapplication);
         }
 
-        //public async Task<IActionResult> OnApplyingJob([Bind("Id,Applicant,Job,ApplicationDate,TimeStamp")] ApplicantJobApplicationPoco applicantJobApplicationPoco)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        applicantJobApplicationPoco.Id = Guid.NewGuid();
-        //        _context.Add(applicantJobApplicationPoco);
-        //        await _context.SaveChangesAsync();
-        //        //return RedirectToAction(nameof(Index));
-        //    }
-        //    //await _context.SaveChangesAsync();
-        //    return RedirectToAction("Details", "ApplicantProfile", new { id= applicantJobApplicationPoco.Applicant});
-
-        //}
+        
         // POST: ApplicantJobApplication/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.

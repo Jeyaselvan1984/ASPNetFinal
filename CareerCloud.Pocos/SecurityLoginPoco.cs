@@ -12,6 +12,7 @@ namespace CareerCloud.Pocos
         [Key]
         public Guid Id { get; set; }
         public string Login { get; set; }
+        [DataType(DataType.Password)]
         public string Password { get; set; }
         [Column("Created_Date")]
         public DateTime Created { get; set; }

@@ -63,14 +63,10 @@ namespace CareerCloud.MVC.Controllers
             var CompanyJobs = _context.CompanyJobDescriptions
                             .Include(c => c.CompanyJob);
            
-
             var careerClouddata = from s in CompanyJobs select s;
             if (!String.IsNullOrEmpty(searchString))
-            {
-                //careerCloudContext.Include(s => s.JobName.Contains(searchString));
-                careerClouddata = careerClouddata.Where(s => s.JobName.Contains(searchString));
-                //CompanyJobDesciptions = CompanyJobDesciptions.Where(s => s.JobName.Contains(searchString));
-                //var model = careerCloudContext.FirstOrDefault(s => s.JobName.Contains("engin"));
+            {            
+                careerClouddata = careerClouddata.Where(s => s.JobName.Contains(searchString));             
             }
             ViewData["ApplicantId"] = id;
 
@@ -78,32 +74,35 @@ namespace CareerCloud.MVC.Controllers
         }
         //
 
-        //// GET: ApplicantProfile/Details/5
-        //public async Task<IActionResult> Details(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var applicantProfilePoco = await _context.ApplicantProfiles
-        //        .Include(a => a.SecurityLogin)
-        //        .Include(a => a.SystemCountryCode)
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (applicantProfilePoco == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(applicantProfilePoco);
-        //}
-
+      public IActionResult ContinueCreatingProfile(Guid loginId)
+        {
+            ViewData["LoginId"] = new SelectList(_context.SecurityLogins,  "Login", loginId.ToString());
+            ViewData["Country"] = new SelectList(_context.SystemCountryCodes, "Code", "Code");
+            return View();
+        }
         // GET: ApplicantProfile/Create
         public IActionResult Create()
         {
             ViewData["Login"] = new SelectList(_context.SecurityLogins, "Id", "Id");
             ViewData["Country"] = new SelectList(_context.SystemCountryCodes, "Code", "Code");
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult CreateComplete([Bind("Id,Login,CurrentSalary,CurrentRate,Currency,Country,Province,Street,City,PostalCode,TimeStamp")] ApplicantProfilePoco applicantProfilePoco)
+        {
+            if (ModelState.IsValid)
+            {
+        
+                applicantProfilePoco.Id = Guid.NewGuid();
+                
+
+                _context.Add(applicantProfilePoco);
+                _context.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+            return RedirectToAction("ContinueCreatingProfile", "ApplicantProfile", new { loginId = applicantProfilePoco.Login });
         }
 
         // POST: ApplicantProfile/Create

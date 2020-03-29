@@ -43,12 +43,35 @@ namespace CareerCloud.MVC.Controllers
             return View(securityLoginPoco);
         }
 
+        public IActionResult CreateNewprofileLogin()
+        {
+            ViewData["Languages"] = new SelectList(_context.systemLanguageCodes, "Name", "Name");
+            return View();
+        }
         // GET: SecurityLoginPocoes/Create
         public IActionResult Create()
         {
             return View();
         }
 
+        [HttpPost]
+        public async Task<IActionResult> ContinueCreatingProfile([Bind("Id,Login,Password,IsLocked,IsInactive,EmailAddress,PhoneNumber,FullName,ForceChangePassword,PrefferredLanguage")] SecurityLoginPoco securityLoginPoco)
+        {
+            securityLoginPoco.PasswordUpdate = DateTime.Now;
+            securityLoginPoco.AgreementAccepted = DateTime.Now;
+            securityLoginPoco.Created = DateTime.Now;
+            securityLoginPoco.ApplicantProfile = null;
+            securityLoginPoco.SecurityLoginsLog = null;
+            
+            if (ModelState.IsValid)
+            {
+                securityLoginPoco.Id = Guid.NewGuid();
+                _context.Add(securityLoginPoco);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("ContinueCreatingProfile", "ApplicantProfile", new { loginId = securityLoginPoco.Id }) ;
+            }
+            return RedirectToAction("CreateNewprofileLogin","SecurityLoginPocoes");
+        }
         // POST: SecurityLoginPocoes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
