@@ -1,10 +1,4 @@
-﻿@model IEnumerable<CareerCloud.Pocos.ApplicantJobApplicationPoco>
-
-@{
-    ViewData["Title"] = "Index";
-}
-
-<h1>List of Job Applications</h1>
+﻿@model IEnumerable<CareerCloud.Pocos.CompanyJobEducationPoco>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -13,16 +7,16 @@
     <thead>
         <tr>
             <th>
-                Job
+                @Html.DisplayNameFor(model => model.Major)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ApplicationDate)
+                @Html.DisplayNameFor(model => model.Importance)
             </th>
             <th>
-                Company ID
+                @Html.DisplayNameFor(model => model.TimeStamp)
             </th>
             <th>
-                Applicant
+                @Html.DisplayNameFor(model => model.CompanyJob)
             </th>
             <th></th>
         </tr>
@@ -31,17 +25,16 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Job)
+                @Html.DisplayFor(modelItem => item.Major)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ApplicationDate)
+                @Html.DisplayFor(modelItem => item.Importance)
             </td>
-
+            <td>
+                @Html.DisplayFor(modelItem => item.TimeStamp)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CompanyJob.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ApplicantProfile)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |

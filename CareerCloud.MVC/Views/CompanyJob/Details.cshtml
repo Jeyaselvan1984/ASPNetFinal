@@ -10,39 +10,65 @@
     <h4>CompanyJobPoco</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
+            Job ID
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.ProfileCreated)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.ProfileCreated)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.IsInactive)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.IsInactive)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.IsCompanyHidden)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.IsCompanyHidden)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TimeStamp)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TimeStamp)
-        </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.CompanyProfile)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.CompanyProfile.Id)
         </dd>
+       
+    </dl>
+    <dl>
+        @foreach (var item in Model.CompanyJobDescription)
+        {
+            <dt>
+                @Html.DisplayNameFor(modelItem => item.JobName)
+            </dt>
+            <dd>
+                @Html.DisplayFor(modelItem => item.JobName)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(modelItem => item.JobDescriptions)
+            </dt>
+            <dd>
+                @Html.DisplayFor(modelItem => item.JobDescriptions)
+            </dd>
+        }
     </dl>
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>
+
+<div>
+    <partial name ="_CompanyJobSkill" model="@Model.CompanyJobSkill.ToList()" />
+
+    <partial name="_CompanyJobEducation" model="@Model.CompanyJobEducation.ToList()" />
+
+</div>
+

@@ -52,6 +52,28 @@ namespace CareerCloud.MVC.Controllers
             return View();
         }
 
+        public IActionResult ContinueUpdateJobSkill(Guid JobId, Guid CompanyId)
+        {
+            ViewData["JobId"] = JobId;
+            ViewData["CompanyId"] = CompanyId;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CreateJobSkillContinueToJobEducation([Bind("Id,Job,CompanyJob,Skill,SkillLevel,Importance,TimeStamp")] CompanyJobSkillPoco companyJobSkillPoco)
+        {
+            if (ModelState.IsValid)
+            {
+                companyJobSkillPoco.Id = Guid.NewGuid();
+                _context.Add(companyJobSkillPoco);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("ContinueUpdateJobEducation", "CompanyJobEducation", new { CompanyId = companyJobSkillPoco.CompanyJob.Company, JobId = companyJobSkillPoco.Job });
+            }
+            return RedirectToAction("ContinueUpdateJobSkill", "CompanyJobSkill", new { CompanyId = companyJobSkillPoco.CompanyJob.Company, JobId = companyJobSkillPoco.Job });
+
+        }
+
         // POST: CompanyJobSkillPocoes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.

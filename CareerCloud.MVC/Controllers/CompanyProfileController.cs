@@ -22,7 +22,10 @@ namespace CareerCloud.MVC.Controllers
         // GET: CompanyProfile
         public async Task<IActionResult> Index()
         {
-            return View(await _context.CompanyProfiles.ToListAsync());
+            var companydata = await _context.CompanyProfiles
+                            .Include(a => a.CompanyDescription)
+                            .ToListAsync();
+            return View( companydata);
         }
 
         // GET: CompanyProfile/Details/5
@@ -34,6 +37,9 @@ namespace CareerCloud.MVC.Controllers
             }
 
             var companyProfilePoco = await _context.CompanyProfiles
+                .Include(a=>a.CompanyDescription)
+                .Include(a=>a.CompanyJob)
+                .Include(a=>a.CompanyLocation)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (companyProfilePoco == null)
             {

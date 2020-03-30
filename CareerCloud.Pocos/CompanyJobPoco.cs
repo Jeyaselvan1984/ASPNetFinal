@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel;
 
 namespace CareerCloud.Pocos
 {
@@ -13,6 +14,7 @@ namespace CareerCloud.Pocos
         public Guid Id { get; set; }
         public Guid Company { get; set; }
         [Column("Profile_Created")]
+        [DisplayName("Job Created")]
         public DateTime ProfileCreated { get; set; }
         [Column("Is_Inactive")]
         public Boolean IsInactive { get; set; }

@@ -26,6 +26,18 @@ namespace CareerCloud.MVC.Controllers
             return View(await careerCloudContext.ToListAsync());
         }
 
+        public async Task<IActionResult> DisplayJobsForGivenCompany(Guid CompanyId)
+        {
+            var companyJobData =  _context.CompanyJobs
+                .Include(c => c.CompanyProfile)
+                .Include(c => c.CompanyProfile.CompanyLocation)
+                .Include(c => c.CompanyJobDescription)
+                .Include(c => c.CompanyJobEducation)
+                .Include(c => c.CompanyJobSkill)
+                .Where(m => m.Company == CompanyId);
+            ViewData["CompanyId"] = CompanyId;
+            return View( await companyJobData.ToListAsync());
+        }
         // GET: CompanyJobPocoes/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {
@@ -36,6 +48,10 @@ namespace CareerCloud.MVC.Controllers
 
             var companyJobPoco = await _context.CompanyJobs
                 .Include(c => c.CompanyProfile)
+                .Include(c=>c.CompanyProfile.CompanyLocation)
+                .Include(c=>c.CompanyJobDescription)
+                .Include(c=>c.CompanyJobEducation)
+                .Include(c=>c.CompanyJobSkill)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (companyJobPoco == null)
             {
@@ -52,6 +68,24 @@ namespace CareerCloud.MVC.Controllers
             return View();
         }
 
+        public async Task<IActionResult> CreateJobFlowStart(Guid CompanyId)
+        {
+            CompanyJobPoco newjob = new CompanyJobPoco();
+            newjob.Id = Guid.NewGuid();
+            newjob.ProfileCreated = DateTime.Now;
+            newjob.IsCompanyHidden = false;
+            newjob.IsInactive = false;
+            newjob.Company = CompanyId;
+            if (ModelState.IsValid)
+            {
+                _context.Add(newjob);
+                await _context.SaveChangesAsync();
+                //ViewData["CompanyId"] = newjob.Company;
+                //ViewData["JobId"] = newjob.Id;
+                return RedirectToAction("ContinueUpdateJobDescription", "CompanyJobDescription", new { CompanyId = newjob.Company, JobId=newjob.Id });
+            }
+            return RedirectToAction("DisplayJobsForGivenCompany", "CompanyJob", new { companyId  = CompanyId});
+        }
         // POST: CompanyJobPocoes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.

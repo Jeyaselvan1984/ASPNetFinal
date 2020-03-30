@@ -4,14 +4,17 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>List Of Employers</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <input type="Submit" value="Add new Company Profile" onclick="location.href = '@Url.Action("Create", "CompanyProfile")'" />
 </p>
 <table class="table">
     <thead>
         <tr>
+            <th>
+                Company Profile Id
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.RegistrationDate)
             </th>
@@ -24,19 +27,18 @@
             <th>
                 @Html.DisplayNameFor(model => model.ContactName)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CompanyLogo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TimeStamp)
-            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
+        @foreach (var item in Model)
+        {
         <tr>
             <td>
+                <b> @Html.DisplayFor(modelItem => item.Id)</b>
+
+            <td>
+              <td> 
                 @Html.DisplayFor(modelItem => item.RegistrationDate)
             </td>
             <td>
@@ -48,23 +50,20 @@
             <td>
                 @Html.DisplayFor(modelItem => item.ContactName)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CompanyLogo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TimeStamp)
-            </td>
+
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
-                <a asp-action="Index" asp-controller="CompanyJobDescription" asp-route-id="@item.Id"> Description </a> |
-                <a asp-action="Index" asp-controller="CompanyJob" asp-route-id="@item.Id"> Jobs </a> |
-                <a asp-action="Index" asp-controller="CompanyJobEducation" asp-route-id="@item.Id"> Educations</a> |
-                <a asp-action="Index" asp-controller="CompanyJobSkill" asp-route-id="@item.Id"> Skills </a> |
-                <a asp-action="Index" asp-controller="CompanyLocation" asp-route-id="@item.Id">Locations</a>
+            
             </td>
+
+        
+
         </tr>
-}
+        }
+
     </tbody>
+
 </table>
+
