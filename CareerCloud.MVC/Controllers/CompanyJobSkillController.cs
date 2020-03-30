@@ -63,14 +63,16 @@ namespace CareerCloud.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateJobSkillContinueToJobEducation([Bind("Id,Job,CompanyJob,Skill,SkillLevel,Importance,TimeStamp")] CompanyJobSkillPoco companyJobSkillPoco)
         {
+            Guid cid = companyJobSkillPoco.CompanyJob.Company;
+            Guid jid = companyJobSkillPoco.Job;
             if (ModelState.IsValid)
             {
                 companyJobSkillPoco.Id = Guid.NewGuid();
                 _context.Add(companyJobSkillPoco);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("ContinueUpdateJobEducation", "CompanyJobEducation", new { CompanyId = companyJobSkillPoco.CompanyJob.Company, JobId = companyJobSkillPoco.Job });
+                return RedirectToAction("ContinueUpdateJobEducation", "CompanyJobEducation", new { CompanyId = cid, JobId = jid});
             }
-            return RedirectToAction("ContinueUpdateJobSkill", "CompanyJobSkill", new { CompanyId = companyJobSkillPoco.CompanyJob.Company, JobId = companyJobSkillPoco.Job });
+            return RedirectToAction("ContinueUpdateJobSkill", "CompanyJobSkill", new { CompanyId = cid, JobId = jid});
 
         }
 
