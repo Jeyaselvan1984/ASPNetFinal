@@ -7,7 +7,7 @@
 <h1>Details</h1>
 
 <div>
-    <h4>ApplicantJobApplicationPoco</h4>
+    <h4>Applied Job</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -37,18 +37,29 @@
         </dd>
         <dt class="col-sm-2">
 
+            Job Name
+        </dt>
+        <dd class="col-sm-10">
+            @foreach (var item in Model.CompanyJob.CompanyJobDescription)
+            {
+                @Html.DisplayFor(model => item.JobName)
+            }
+        </dd>
+        <dt class="col-sm-2">
+
             Job Description
         </dt>
         <dd class="col-sm-10">
-
-            @Html.DisplayFor(model => model.CompanyJob.CompanyJobDescription)
+            @foreach (var item in Model.CompanyJob.CompanyJobDescription)
+            {
+                @Html.DisplayFor(model => item.JobDescriptions)
+            }
         </dd>
         <dt class="col-sm-2">
 
             Company
         </dt>
         <dd class="col-sm-10">
-
             @Html.DisplayFor(model => model.CompanyJob.Company)
         </dd>
     </dl>

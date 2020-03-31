@@ -26,6 +26,17 @@ namespace CareerCloud.MVC.Controllers
             return View(await careerCloudContext.ToListAsync());
         }
 
+        public async Task<IActionResult> DisplayJobsForGivenJobId(Guid JobId)
+        {
+            var careerCloudContext = _context.ApplicantJobApplications.Include(a => a.ApplicantProfile)
+              .Include(a => a.CompanyJob)
+                .ThenInclude(c => c.CompanyJobDescription)
+                 .AsNoTracking()
+                 .Where(a => a.Job == JobId);
+            return View(await careerCloudContext.ToListAsync());
+
+        }
+
         // GET: ApplicantJobApplication/Details/5
         public async Task<IActionResult> Details(Guid? id)
         {

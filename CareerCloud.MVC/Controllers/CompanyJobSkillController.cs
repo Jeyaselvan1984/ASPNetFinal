@@ -61,18 +61,21 @@ namespace CareerCloud.MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateJobSkillContinueToJobEducation([Bind("Id,Job,CompanyJob,Skill,SkillLevel,Importance,TimeStamp")] CompanyJobSkillPoco companyJobSkillPoco)
+        public async Task<IActionResult> CreateJobSkillContinueToJobEducation([Bind("Id,Job,Skill,SkillLevel,Importance,TimeStamp")] CompanyJobSkillPoco companyJobSkillPoco)
         {
-            Guid cid = companyJobSkillPoco.CompanyJob.Company;
+            //Guid cid = companyJobSkillPoco.CompanyJob.Company;
             Guid jid = companyJobSkillPoco.Job;
             if (ModelState.IsValid)
             {
                 companyJobSkillPoco.Id = Guid.NewGuid();
-                _context.Add(companyJobSkillPoco);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("ContinueUpdateJobEducation", "CompanyJobEducation", new { CompanyId = cid, JobId = jid});
+                 _context.Add(companyJobSkillPoco);
+               await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+                //return RedirectToAction("Details", "CompanyJob", new { id = jid });
+
+                //return RedirectToAction("ContinueUpdateJobEducation", "CompanyJobEducation", new { CompanyId = cid, JobId = jid});
             }
-            return RedirectToAction("ContinueUpdateJobSkill", "CompanyJobSkill", new { CompanyId = cid, JobId = jid});
+            return RedirectToAction("ContinueUpdateJobSkill", "CompanyJobSkill", new {  JobId = jid});
 
         }
 
@@ -88,7 +91,7 @@ namespace CareerCloud.MVC.Controllers
                 companyJobSkillPoco.Id = Guid.NewGuid();
                 _context.Add(companyJobSkillPoco);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Details", "CompanyJob", new { id = companyJobSkillPoco.Job });
             }
             ViewData["Job"] = new SelectList(_context.CompanyJobs, "Id", "Id", companyJobSkillPoco.Job);
             return View(companyJobSkillPoco);

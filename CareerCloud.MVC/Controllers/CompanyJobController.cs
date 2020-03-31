@@ -26,7 +26,7 @@ namespace CareerCloud.MVC.Controllers
             return View(await careerCloudContext.ToListAsync());
         }
 
-        public async Task<IActionResult> DisplayJobsForGivenCompany(Guid CompanyId)
+        public async Task<IActionResult> DisplayJobsForGivenCompany(Guid CompanyId,string sortOrder="Id")
         {
             var companyJobData =  _context.CompanyJobs
                 .Include(c => c.CompanyProfile)
@@ -35,8 +35,27 @@ namespace CareerCloud.MVC.Controllers
                 .Include(c => c.CompanyJobEducation)
                 .Include(c => c.CompanyJobSkill)
                 .Where(m => m.Company == CompanyId);
+            ViewBag.IdSortParm = sortOrder == "Id" ? "Id_desc" : "";
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
+            var students = from s in companyJobData
+                           select s;
+            switch (sortOrder)
+            {
+                case "Id_desc":
+                    students = students.OrderByDescending(s => s.Id);   
+                    break;
+                case "Date":
+                    students = students.OrderBy(s => s.ProfileCreated);
+                    break;
+                case "date_desc":
+                    students = students.OrderByDescending(s => s.ProfileCreated);
+                    break;
+                default:
+                    students = students.OrderBy(s => s.Id);
+                    break;
+            }
             ViewData["CompanyId"] = CompanyId;
-            return View( await companyJobData.ToListAsync());
+            return View( await students.ToListAsync());
         }
         // GET: CompanyJobPocoes/Details/5
         public async Task<IActionResult> Details(Guid? id)
@@ -82,9 +101,11 @@ namespace CareerCloud.MVC.Controllers
                 await _context.SaveChangesAsync();
                 //ViewData["CompanyId"] = newjob.Company;
                 //ViewData["JobId"] = newjob.Id;
-                return RedirectToAction("ContinueUpdateJobDescription", "CompanyJobDescription", new { CompanyId = newjob.Company, JobId=newjob.Id });
+                return RedirectToAction("Details", "CompanyJob", new { id = newjob.Id });
+
+                //return RedirectToAction("ContinueUpdateJobDescription", "CompanyJobDescription", new { CompanyId = newjob.Company, JobId=newjob.Id });
             }
-            return RedirectToAction("DisplayJobsForGivenCompany", "CompanyJob", new { companyId  = CompanyId});
+            return RedirectToAction("DisplayJobsForGivenCompany", "CompanyJob", new { sortOrder="Id", companyId  = CompanyId});
         }
         // POST: CompanyJobPocoes/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 

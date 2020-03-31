@@ -89,9 +89,9 @@ namespace CareerCloud.MVC.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateJobDescriptionContinueToJobSkill([Bind("Id,Job,CompanyJob,JobName,JobDescriptions,TimeStamp")] CompanyJobDescriptionPoco companyJobDescriptionPoco)
+        public async Task<IActionResult> CreateJobDescriptionContinueToJobSkill([Bind("Id,Job,JobName,JobDescriptions,TimeStamp")] CompanyJobDescriptionPoco companyJobDescriptionPoco)
         {
-            Guid cid = companyJobDescriptionPoco.CompanyJob.Company;
+            //Guid cid = companyJobDescriptionPoco.CompanyJob.Company;
             Guid jid = companyJobDescriptionPoco.Job;
             if (ModelState.IsValid)
             {
@@ -99,10 +99,12 @@ namespace CareerCloud.MVC.Controllers
                
                     _context.Add(companyJobDescriptionPoco);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("ContinueUpdateJobSkill", "CompanyJobSkill", new { CompanyId = cid, JobId = jid });
+                return RedirectToAction(nameof(Index));
+
 
             }
-            return RedirectToAction("ContinueUpdateJobDescription", "CompanyJobDescription", new { CompanyId = cid, JobId=jid });
+            return RedirectToAction("ContinueUpdateJobSkill", "CompanyJobSkill", new { JobId = jid });
+            //return RedirectToAction("ContinueUpdateJobDescription", "CompanyJobDescription", new { CompanyId = cid, JobId=jid });
 
         }
         // POST: CompanyJobDescription/Create

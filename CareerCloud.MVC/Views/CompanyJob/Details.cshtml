@@ -7,7 +7,7 @@
 <h1>Details</h1>
 
 <div>
-    <h4>CompanyJobPoco</h4>
+    <h4>Details of selected Job</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -61,14 +61,22 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a>    |
+    <a asp-action="Index">Back to List</a>     |
+    <a asp-action="ContinueUpdateJobDescription" asp-controller="CompanyJobDescription" asp-route-JobId="@Model.Id"> Add Job Description </a>    |  
+    <a asp-action="ContinueUpdateJobSkill" asp-controller="CompanyJobSkill" asp-route-JobId="@Model.Id"  > Add New Job Skill</a>     |
+    <a asp-action="ContinueUpdateJobEducation" asp-controller="CompanyJobEducation" asp-route-JobId="@Model.Id"> Add New Education Requirement</a>
 </div>
-
 <div>
+
     <partial name ="_CompanyJobSkill" model="@Model.CompanyJobSkill.ToList()" />
 
     <partial name="_CompanyJobEducation" model="@Model.CompanyJobEducation.ToList()" />
 
-</div>
 
+</div>
+<div>
+    <h2>Display Jobs Applications</h2>
+    <a asp-action="DisplayJobForGivenJobId" asp-controller="ApplicantJobApplication" asp-route-JobId="@Model.Id"> Job Applications </a>
+
+</div>

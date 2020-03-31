@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using CareerCloud.EntityFrameworkDataAccess;
 using CareerCloud.Pocos;
+using X.PagedList;
 
 namespace CareerCloud.MVC.Controllers
 {
@@ -20,12 +21,15 @@ namespace CareerCloud.MVC.Controllers
         }
 
         // GET: CompanyProfile
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int ?page)
         {
             var companydata = await _context.CompanyProfiles
                             .Include(a => a.CompanyDescription)
+                            .OrderByDescending(a=>a.RegistrationDate)
                             .ToListAsync();
-            return View( companydata);
+            int pageSize = 8;
+            int pageNumber = (page ?? 1);
+            return View(companydata.ToPagedList(pageNumber, pageSize));
         }
 
         // GET: CompanyProfile/Details/5

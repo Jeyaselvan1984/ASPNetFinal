@@ -1,31 +1,37 @@
-﻿@model IEnumerable<CareerCloud.Pocos.CompanyProfilePoco>
+﻿
+@using X.PagedList.Mvc.Core;
+@using X.PagedList;
+@model IPagedList<CareerCloud.Pocos.CompanyProfilePoco>
 
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
 @{
     ViewData["Title"] = "Index";
 }
-
+@using (Html.BeginForm("Index", "Student", FormMethod.Get))
+{
+}
 <h1>List Of Employers</h1>
 
 <p>
     <input type="Submit" value="Add new Company Profile" onclick="location.href = '@Url.Action("Create", "CompanyProfile")'" />
 </p>
+
 <table class="table">
     <thead>
         <tr>
+
             <th>
-                Company Profile Id
+                Registration Date
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.RegistrationDate)
+                Company Website
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CompanyWebsite)
+                Contact Phone
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ContactPhone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ContactName)
+                Contact Name
             </th>
             <th></th>
         </tr>
@@ -33,37 +39,40 @@
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>
-                <b> @Html.DisplayFor(modelItem => item.Id)</b>
+            <tr>
 
-            <td>
-              <td> 
-                @Html.DisplayFor(modelItem => item.RegistrationDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CompanyWebsite)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContactPhone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ContactName)
-            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RegistrationDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CompanyWebsite)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContactPhone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ContactName)
+                </td>
 
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
-            
-            </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
 
-        
+                </td>
 
-        </tr>
+
+
+            </tr>
         }
 
     </tbody>
 
 </table>
 
+<br />
+
+
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+
+    @Html.PagedListPager(Model, page => Url.Action("Index", "CompanyProfile", new { page }))
